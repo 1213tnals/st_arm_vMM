@@ -11,7 +11,10 @@
 
 
 
-#define TORQUE_TO_VALUE   217.39     // XM430-W350
+// #define TORQUE_TO_VALUE   217.39     // XM430-W350
+// #define TORQUE_TO_VALUE_XM430_W210   280.00     // XM430-W210
+#define TORQUE_TO_VALUE_XM540_W270   197.41     // XM540-W270
+#define TORQUE_TO_VALUE_XM430_W350   207.12     // XM430-W350
 #define RAD_TO_VALUE      651.8981    // 1 rev = 4096
 
 #define PROTOCOL_VERSION      2.0 
@@ -142,10 +145,11 @@ class Dynamixel{
 
   const int dx_id[num_of_dynamixels] = {0, 1, 2, 3, 4, 5, 6};
   // float zero_manual_offset_[4] = {0.2424, 0, 0, 0};
-  float zero_manual_offset_[num_of_dynamixels] = {0, 0, -0.2424, 0, 0, 0, 0};
+  float zero_manual_offset_[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
   uint32_t position[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
   uint32_t velocity[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
   int32_t ref_torque_value_[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
+  int32_t torque2value[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
 
   VectorXd ref_th_value_ = VectorXd::Zero(num_of_dynamixels);
   VectorXd ref_th_ = VectorXd::Zero(num_of_dynamixels);
@@ -158,12 +162,13 @@ class Dynamixel{
   VectorXd tau_ = VectorXd::Zero(num_of_dynamixels);
 
   void syncReadTheta();
+  void initActuatorValues();
   void syncReadThetaDot();
   void syncWriteTheta();
   void syncWriteTorque();
   void getParam(int32_t data, uint8_t *param);
   float convertValue2Radian(int32_t value);
-  int32_t torqueToValue(double);
+  int32_t torqueToValue(double torque, uint8_t index);
 };
 
 #endif  // DYNAMIXEL_H

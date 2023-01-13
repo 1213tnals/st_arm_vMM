@@ -3,6 +3,8 @@
 #define num_of_dynamixels   7
 
 Dynamixel::Dynamixel(){
+  initActuatorValues();
+
   uint8_t dxl_error = 0;
   int dxl_comm_result = COMM_TX_FAIL;
 
@@ -75,7 +77,7 @@ void Dynamixel::syncReadTheta()
   groupSyncRead.fastSyncReadTxRxPacket();
   for(uint8_t i=0; i < num_of_dynamixels; i++) position[i] = groupSyncRead.getData(dx_id[i], kRegStandard_PresentPosition, 4);
   groupSyncRead.clearParam();
-  for(uint8_t i=0; i < num_of_dynamixels; i++) th_[i] = convertValue2Radian(position[i]) - PI + zero_manual_offset_[i];
+  for(uint8_t i=0; i < num_of_dynamixels; i++) th_[i] = convertValue2Radian(position[i]) - PI - zero_manual_offset_[i];
 }
 
 
@@ -116,7 +118,7 @@ void Dynamixel::syncWriteTorque()
   for (uint8_t i=0; i < num_of_dynamixels; i++)
   {
     // ref_torque_value_[i] = ref_torque_[i] * TORQUE_TO_VALUE;
-    ref_torque_value_[i] = torqueToValue(ref_torque_[i]);
+    ref_torque_value_[i] = torqueToValue(ref_torque_[i], i);
     if(ref_torque_value_[i] > 1000) ref_torque_value_[i] = 1000;
     else if(ref_torque_value_[i] < -1000) ref_torque_value_[i] = -1000;
   }
@@ -135,9 +137,9 @@ void Dynamixel::syncWriteTorque()
 
 // {XM430-W210} => if effort to current = 1.3*i      => 500 = 1.345[A] = 1.7485 Nm => 1[Nm] = 285
 // {XM430-W210} => if effort to current = 1.3*i-0.32 => 500 = 1.345[A] = 1.4285 Nm => 1[Nm] = 350
-int32_t Dynamixel::torqueToValue(double torque)
+int32_t Dynamixel::torqueToValue(double torque, uint8_t index)
 {
-  int32_t value_ = int(torque * 285);     // XM430-W210
+  int32_t value_ = int(torque * torque2value[index]);     // XM430-W210
   // int32_t value_ = int(torque * 208.427);  // XM430-W350
   // if(value_ > 1) value_ += 10;       // friction compensation
   // else if(value_ < -1) value_ -= 10;
@@ -193,4 +195,23 @@ void Dynamixel::CalculateEstimatedThetaDot(int dt_us)
 {
   th_dot_est_ = (th_last_ - th_) / (-dt_us * 0.00001);
   th_last_ = th_;
+}
+
+void Dynamixel::initActuatorValues()
+{
+  torque2value[0] = TORQUE_TO_VALUE_XM430_W350;
+  torque2value[1] = TORQUE_TO_VALUE_XM540_W270;
+  torque2value[2] = TORQUE_TO_VALUE_XM540_W270;
+  torque2value[3] = TORQUE_TO_VALUE_XM430_W350;
+  torque2value[4] = TORQUE_TO_VALUE_XM430_W350;
+  torque2value[5] = TORQUE_TO_VALUE_XM430_W350;
+  torque2value[6] = TORQUE_TO_VALUE_XM430_W350;
+
+  zero_manual_offset_[0] = 0;
+  zero_manual_offset_[1] = PI/2;
+  zero_manual_offset_[2] = -0.9379;
+  zero_manual_offset_[3] = -0.2838;
+  zero_manual_offset_[4] = 0;
+  zero_manual_offset_[5] = 0;
+  zero_manual_offset_[6] = 0;
 }

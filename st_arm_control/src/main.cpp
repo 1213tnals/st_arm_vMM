@@ -120,39 +120,39 @@ void *rt_motion_thread(void *arg){
 
     while(true){
 
-        if(is_first_loop){
-            motor_ctrl.EnableMotor();
-            // motor_ctrl.EnableFilter();
-            timespec_add_us(&TIME_NEXT, 4 * 1000 * 1000);
-            is_first_loop = false;
-            loop_count++;
-        }
-        else if(loop_count > 1000){
-            loop_count++;
+        // if(is_first_loop){
+        //     motor_ctrl.EnableMotor();
+        //     // motor_ctrl.EnableFilter();
+        //     timespec_add_us(&TIME_NEXT, 4 * 1000 * 1000);
+        //     is_first_loop = false;
+        //     loop_count++;
+        // }
+        // else if(loop_count > 1000){
+        //     loop_count++;
             jm_dynamics.Loop();
 
-            if(comm_loop_count > 500 && is_print_comm_frequency) {
-                comm_loop_count = 1;
-                if(comm_loop_count_time_sec < 120)
-                {
-                    comm_loop_count_time_sec++;
-                    std::cout << "    M1 fbcnt: total: " << _DEV_MC[0].count;  std::cout << "  A1: " << _DEV_MC[0].count_A1;
-                    std::cout << "    M2 fbcnt: total: " << _DEV_MC[1].count;  std::cout << "  A1: " << _DEV_MC[1].count_A1;
-                    std::cout << "    M3 fbcnt: total: " << _DEV_MC[2].count;  std::cout << "  A1: " << _DEV_MC[2].count_A1 << std::endl;
-                    // std::cout << "  92: " << _DEV_MC[2].count_92 << std::endl;
-                    // std::cout << "    M3 unknown value:  " << _DEV_MC[2].unknown_value << std::endl;
-                    for(uint8_t i=0;i<3;i++)
-                    {
-                        _DEV_MC[i].count = 0;
-                        _DEV_MC[i].count_A1 = 0;
-                        _DEV_MC[i].count_92 = 0;
-                    }
-                }
-                else is_print_comm_frequency = false;
-            }
-            if(is_print_comm_frequency) comm_loop_count++;
-        }
-        else loop_count++;
+        //     if(comm_loop_count > 500 && is_print_comm_frequency) {
+        //         comm_loop_count = 1;
+        //         if(comm_loop_count_time_sec < 120)
+        //         {
+        //             comm_loop_count_time_sec++;
+        //             std::cout << "    M1 fbcnt: total: " << _DEV_MC[0].count;  std::cout << "  A1: " << _DEV_MC[0].count_A1;
+        //             std::cout << "    M2 fbcnt: total: " << _DEV_MC[1].count;  std::cout << "  A1: " << _DEV_MC[1].count_A1;
+        //             std::cout << "    M3 fbcnt: total: " << _DEV_MC[2].count;  std::cout << "  A1: " << _DEV_MC[2].count_A1 << std::endl;
+        //             // std::cout << "  92: " << _DEV_MC[2].count_92 << std::endl;
+        //             // std::cout << "    M3 unknown value:  " << _DEV_MC[2].unknown_value << std::endl;
+        //             for(uint8_t i=0;i<3;i++)
+        //             {
+        //                 _DEV_MC[i].count = 0;
+        //                 _DEV_MC[i].count_A1 = 0;
+        //                 _DEV_MC[i].count_92 = 0;
+        //             }
+        //         }
+        //         else is_print_comm_frequency = false;
+        //     }
+        //     if(is_print_comm_frequency) comm_loop_count++;
+        // }
+        // else loop_count++;
 
         clock_gettime(CLOCK_REALTIME, &TIME_NOW);
         timespec_add_us(&TIME_NEXT, PERIOD_US);
@@ -166,7 +166,7 @@ void *rt_motion_thread(void *arg){
 
 
 void *rt_dynamixel_thread(void *arg){
-    const long PERIOD_US = 5 * 1000;
+    const long PERIOD_US = 2.5 * 1000;
     struct timespec TIME_NEXT;
     struct timespec TIME_NOW;
     struct timespec TIME_TIC;
