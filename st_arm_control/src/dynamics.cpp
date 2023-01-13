@@ -728,7 +728,7 @@ namespace Dynamics
 
         arm_rbdl.elbow_pitch_link = RBDLBody(0.11902, RBDLVector3d(0.16004, -0.0010965, 0.01803), arm_rbdl.elbow_pitch_inertia);
         arm_rbdl.elbow_pitch_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,1,0));
-        arm_rbdl.elbow_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(2, RBDL::Math::Xtrans(RBDLVector3d(0.2505,0,0)), arm_rbdl.elbow_pitch_joint, arm_rbdl.elbow_pitch_link);
+        arm_rbdl.elbow_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(2, RBDL::Math::Xtrans(RBDLVector3d(0.25,0,0)), arm_rbdl.elbow_pitch_joint, arm_rbdl.elbow_pitch_link);
 
         arm_rbdl.wrist_pitch_link = RBDLBody(0.04835, RBDLVector3d(0.043363, -0.001, 0.011409), arm_rbdl.wrist_pitch_inertia);
         arm_rbdl.wrist_pitch_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,1,0));
