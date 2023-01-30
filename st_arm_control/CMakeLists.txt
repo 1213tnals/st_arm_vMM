@@ -50,7 +50,8 @@ add_executable(
   src/motor_controller.cpp
   src/dynamics.cpp
   src/dynamixel.cpp
-  src/callback.cpp)
+  src/callback.cpp
+  src/mobile_base.cpp)
 add_dependencies(st_arm_control ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(st_arm_control ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${EIGEN3_LIBRARIES} Qt5::Core ${RBDL_LIBRARY})
 

@@ -6,6 +6,8 @@
 #include <QByteArray>
 #include "rmd_motor.h"
 
+#define   num_of_rmdX   4
+
 typedef struct{
     unsigned char header;
     unsigned char dlc;

@@ -8,10 +8,11 @@
 static void *rt_motion_thread(void *arg);
 static void *rt_dynamixel_thread(void *arg);
 pRBCORE_SHM sharedData;
-rmd_motor _DEV_MC[3];
+rmd_motor _BASE_MC[4];
 ROBOT_STATE_DATA ros_data;
 Dynamics::JMDynamics jm_dynamics;
 Motor_Controller motor_ctrl;
+Mobile_Base base_ctrl;
 Dynamixel _WRIST_MC;
 Callback callback;
 
@@ -58,6 +59,9 @@ int main(int argc, char *argv[])
     ros::Subscriber weight_est_start_sub_;
     weight_est_start_sub_ = node_handle_.subscribe("unity/calibrate_obj_weight", 10, &Dynamics::JMDynamics::SwitchOnAddingEstimatedObjWeightToRBDL, &jm_dynamics);
 
+    ros::Subscriber ref_base_vel_sub_;
+    ref_base_vel_sub_ = node_handle_.subscribe("unity/ref_base_vel_command", 10, &Callback::JoystickCallback, &callback);
+
     // spi2can::getInstance();
 
     sharedData = (pRBCORE_SHM)malloc(sizeof(RBCORE_SHM));
@@ -85,7 +89,7 @@ int main(int argc, char *argv[])
 
         for (uint8_t i = 0; i<3; i ++)
         {
-            msg.effort.push_back(_DEV_MC[i].GetTorque());
+            msg.effort.push_back(_BASE_MC[i].GetTorque());
             msg.position.push_back(jm_dynamics.ref_th[i]);
             // msg.velocity.push_back(jm_dynamics.th_dot[i]);
             // msg.velocity.push_back(jm_dynamics.th_dot_estimated[i]);
@@ -136,16 +140,16 @@ void *rt_motion_thread(void *arg){
         //         if(comm_loop_count_time_sec < 120)
         //         {
         //             comm_loop_count_time_sec++;
-        //             std::cout << "    M1 fbcnt: total: " << _DEV_MC[0].count;  std::cout << "  A1: " << _DEV_MC[0].count_A1;
-        //             std::cout << "    M2 fbcnt: total: " << _DEV_MC[1].count;  std::cout << "  A1: " << _DEV_MC[1].count_A1;
-        //             std::cout << "    M3 fbcnt: total: " << _DEV_MC[2].count;  std::cout << "  A1: " << _DEV_MC[2].count_A1 << std::endl;
-        //             // std::cout << "  92: " << _DEV_MC[2].count_92 << std::endl;
-        //             // std::cout << "    M3 unknown value:  " << _DEV_MC[2].unknown_value << std::endl;
+        //             std::cout << "    M1 fbcnt: total: " << _BASE_MC[0].count;  std::cout << "  A1: " << _BASE_MC[0].count_A1;
+        //             std::cout << "    M2 fbcnt: total: " << _BASE_MC[1].count;  std::cout << "  A1: " << _BASE_MC[1].count_A1;
+        //             std::cout << "    M3 fbcnt: total: " << _BASE_MC[2].count;  std::cout << "  A1: " << _BASE_MC[2].count_A1 << std::endl;
+        //             // std::cout << "  92: " << _BASE_MC[2].count_92 << std::endl;
+        //             // std::cout << "    M3 unknown value:  " << _BASE_MC[2].unknown_value << std::endl;
         //             for(uint8_t i=0;i<3;i++)
         //             {
-        //                 _DEV_MC[i].count = 0;
-        //                 _DEV_MC[i].count_A1 = 0;
-        //                 _DEV_MC[i].count_92 = 0;
+        //                 _BASE_MC[i].count = 0;
+        //                 _BASE_MC[i].count_A1 = 0;
+        //                 _BASE_MC[i].count_92 = 0;
         //             }
         //         }
         //         else is_print_comm_frequency = false;

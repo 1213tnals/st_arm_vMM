@@ -2,7 +2,7 @@
 #define DYNAMICS_H
 
 #include "motor_controller.h"
-
+#include "mobile_base.h"
 
 #include <eigen3/Eigen/Dense>
 
@@ -181,6 +181,7 @@ namespace Dynamics
             weight_estimation,
             joint_space_pd,
             one_motor_tuning,
+            // wheel_speed_control,
             not_defined_2
         };
         enum ControlMode control_mode;
@@ -215,6 +216,8 @@ namespace Dynamics
         VectorXd ref_th = VectorXd::Zero(7);
         VectorXd last_th = VectorXd::Zero(6);
         VectorXd th_dot = VectorXd::Zero(6);
+        // VectorXd wheel_speed = VectorXd::Zero(4);     //wheel 4
+        // VectorXd ref_wheel_speed = VectorXd::Zero(4);     //wheel 4
         VectorXd th_dot_estimated = VectorXd::Zero(7);
         VectorXd th_dot_sma_filtered = VectorXd::Zero(7);
         VectorXd last_th_dot = VectorXd::Zero(7);
@@ -247,14 +250,15 @@ namespace Dynamics
 
         VectorXd GetTorque();
         void SetTheta(VectorXd thetas);
-        void SetThetaWrist(VectorXd thetas);
+        // void SetThetaWrist(VectorXd thetas);
         void SetThetaDot(VectorXd);
         void SetThetaDotSMAF(VectorXd);
-        void SetThetaDotEst(VectorXd);
+        // void SetThetaDotEst(VectorXd);
         void SetGripperValue(float);
+        // void GetWheelSpeed(VectorXd);
         void CalculateRefEEPose();
         //void OM_joint_states_callback(const sensor_msgs::JointState::ConstPtr &msg);
-        void SetOMTheta(VectorXd thetas);
+        // void SetOMTheta(VectorXd thetas);
         void GenerateTorqueJointSpacePD();
         void GenerateTorqueOneMotorTuning();
         void GenerateTorqueTaskSpacePD();
@@ -264,8 +268,10 @@ namespace Dynamics
         void GenerateTorqueManipulationMode();
         void GenerateTorqueManipulationModeWithWeightEstimation();
         void GenerateTorqueVisionMode();
+        // void GenerateWheelSpeed();
         void GenerateGripperTorque();
         void PostureGeneration();
+        void BaseMovingGeneration();
         void Loop();
         void SwitchMode(const std_msgs::Int32ConstPtr & msg);
 

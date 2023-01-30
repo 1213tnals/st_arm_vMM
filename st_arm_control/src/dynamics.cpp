@@ -1,6 +1,7 @@
 #include "dynamics.h"
 
 extern Motor_Controller motor_ctrl;
+extern Mobile_Base base_ctrl;
 
 namespace Dynamics
 {
@@ -15,8 +16,12 @@ namespace Dynamics
     {
         SetTheta(motor_ctrl.GetJointTheta());
         SetThetaDotSMAF(motor_ctrl.GetThetaDotSMAF());
-        PostureGeneration();
+        PostureGeneration();                       //Making Manupulator tau
         motor_ctrl.SetTorque(GetTorque());
+
+        base_ctrl.SetActualWheelSpeed(motor_ctrl.GetWheelSpeed());
+        base_ctrl.BaseMovingGeneration();          //Making Base speed
+        motor_ctrl.SetWheelSpeed(base_ctrl.GetTargetWheelSpeed());
     }
 
 
@@ -48,11 +53,13 @@ namespace Dynamics
             case one_motor_tuning:
                 GenerateTorqueOneMotorTuning();
                 break;
+            // case wheel_speed_control:
+            //     GenerateWheelSpeed();
+            //     break;
             default:
                 GenerateTorqueGravityCompensation();
         }
     }
-
 
     void JMDynamics::SwitchMode(const std_msgs::Int32ConstPtr & msg)
     {
@@ -64,7 +71,8 @@ namespace Dynamics
         else if (msg -> data == 3) control_mode = draw_infinity;  
         else if (msg -> data == 4) control_mode = weight_estimation;  
         else if (msg -> data == 5) control_mode = joint_space_pd;  
-        else if (msg -> data == 6) control_mode = one_motor_tuning;  
+        else if (msg -> data == 6) control_mode = one_motor_tuning;
+        // else if (msg -> data == 7) control_mode = wheel_speed_control;   
         else                       control_mode = gravity_compensation;    
     }
 
@@ -90,10 +98,10 @@ namespace Dynamics
     }
 
 
-    void JMDynamics::SetThetaDotEst(VectorXd a_theta_dot_est)
-    {
-        for(uint8_t i=0; i<4; i++) th_dot_estimated[i+3] = a_theta_dot_est[i];
-    }
+    // void JMDynamics::SetThetaDotEst(VectorXd a_theta_dot_est)
+    // {
+    //     for(uint8_t i=0; i<4; i++) th_dot_estimated[i+3] = a_theta_dot_est[i];
+    // }
 
 
     void JMDynamics::SetGripperValue(float a_desired_gripper_theta)
@@ -110,7 +118,6 @@ namespace Dynamics
             is_object_dropped = true;
         }
     }
-
 
     VectorXd JMDynamics::GetTorque()
     {   
@@ -664,6 +671,11 @@ namespace Dynamics
 
         joint_torque[6] = l_torque;
     }
+
+    // void JMDynamics::GenerateWheelSpeed()
+    // {
+
+    // }
 
 
     void JMDynamics::SetRBDLVariables()

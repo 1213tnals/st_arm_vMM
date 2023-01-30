@@ -6,12 +6,13 @@
 #include <string.h>
 #include <vector>
 
-#define RMD_COUNT 3
+#define num_of_rmdX 4
 
 extern pRBCORE_SHM sharedData;
-extern rmd_motor _DEV_MC[RMD_COUNT];
+extern rmd_motor _BASE_MC[num_of_rmdX];
 
-#define SPI_SPEED 4000000
+// #define SPI_SPEED 4000000
+#define SPI_SPEED 255
 unsigned char spi_mode = SPI_MODE_0;
 unsigned char spi_bits_per_word = 8;
 unsigned char spi_speed = SPI_SPEED;
@@ -83,14 +84,13 @@ void *spi2can::spi2can_thread(void *arg){
 
     clock_gettime(CLOCK_REALTIME, &TIME_NEXT);
     while(true){
-        for(int j=0; j<8; j++){
-            rmd_can::reference_msg[0].data[j] = _DEV_MC[0].ref_data[j];
-            rmd_can::reference_msg[1].data[j] = _DEV_MC[0].ref_data2[j];
-            rmd_can::reference_msg[2].data[j] = _DEV_MC[1].ref_data[j];
-            rmd_can::reference_msg[3].data[j] = _DEV_MC[1].ref_data2[j];
-            rmd_can::reference_msg[4].data[j] = _DEV_MC[2].ref_data[j];
-            rmd_can::reference_msg[5].data[j] = _DEV_MC[2].ref_data2[j];
-        }
+        // CAN A,B
+        // for(int j=0; j<8; j++){
+        //     rmd_can::reference_msg[6].data[j]  = _BASE_MC[0].ref_data[j];
+        //     rmd_can::reference_msg[7].data[j]  = _BASE_MC[1].ref_data[j];
+        //     rmd_can::reference_msg[9].data[j]  = _BASE_MC[2].ref_data[j];
+        //     rmd_can::reference_msg[10].data[j] = _BASE_MC[3].ref_data[j];
+        // }
 
         for(int i=0; i<6; i++){
             if(sharedData->rmd_motor_run_flag[i]){
@@ -100,9 +100,12 @@ void *spi2can::spi2can_thread(void *arg){
             }
         }
 
+        //CAN C,D
         for(int j=0; j<8; j++){
-            rmd_can::reference_msg[6].data[j] = _DEV_MC[2].ref_data[j];
-            rmd_can::reference_msg[7].data[j] = _DEV_MC[2].ref_data2[j];
+            rmd_can::reference_msg[6].data[j]  = _BASE_MC[0].ref_data[j];
+            rmd_can::reference_msg[7].data[j]  = _BASE_MC[1].ref_data[j];
+            rmd_can::reference_msg[9].data[j]  = _BASE_MC[2].ref_data[j];
+            rmd_can::reference_msg[10].data[j] = _BASE_MC[3].ref_data[j];
         }
 
         for(int i=0; i<6; i++){
@@ -128,23 +131,28 @@ void *spi2can::spi2can_thread(void *arg){
                 for(int i=0; i<8; i++) recv_data1[i] = recv_buf1[4+i];
                 recv_buf1.remove(0, 12);
 
-                if(id>=0x140 && id<=0x240+RMD_COUNT){
+                if(id>=0x140 && id<=0x240+num_of_rmdX){
                     int bno = 0;
                     if(id>=0x240) bno = id-0x240;
                     else bno = id-0x140;
-                    _DEV_MC[bno].count++;
-                    if(recv_data1[0] == 0xA1){ 
-                        for(int j=0; j<dlc; j++) _DEV_MC[bno].torque_data[j] = recv_data1[j];
-                        _DEV_MC[bno].UpdateRxData();
-                        _DEV_MC[bno].count_A1++;
+                    _BASE_MC[bno].count++;
+                    // if(recv_data1[0] == 0xA1){ 
+                    //     for(int j=0; j<dlc; j++) _BASE_MC[bno].rx_data_a1[j] = recv_data1[j];
+                    //     _BASE_MC[bno].UpdateRxDataA1();
+                    //     _BASE_MC[bno].count_A1++;
+                    // }
+                    if(recv_data1[0] == 0xA2){
+                        for(int j=0; j<dlc; j++) _BASE_MC[bno].rx_data_a2[j] = recv_data1[j];
+                        _BASE_MC[bno].UpdateRxDataA2();
+                        _BASE_MC[bno].count_A2++;
                     }
-                    else if(recv_data1[0] == 0x92){
-                        for(int j=0; j<dlc; j++) _DEV_MC[bno].enc_data[j] = recv_data1[j];
-                        _DEV_MC[bno].count_92++;
-                    } 
+                    // else if(recv_data1[0] == 0x92){
+                    //     for(int j=0; j<dlc; j++) _BASE_MC[bno].enc_data_v3[j] = recv_data1[j];
+                    //     _BASE_MC[bno].count_92++;
+                    // } 
                     else
                     {
-                        _DEV_MC[bno].unknown_value = (int)recv_data1[0];
+                        _BASE_MC[bno].unknown_value = (int)recv_data1[0];
                     }
                 }
             }else recv_buf1.remove(0, 1);
@@ -159,20 +167,25 @@ void *spi2can::spi2can_thread(void *arg){
                 for(int i=0; i<8; i++) recv_data2[i] = recv_buf2[4+i];                
                 recv_buf2.remove(0, 12);
 
-                if(id>=0x140 && id<=0x240+RMD_COUNT){
+                if(id>=0x140 && id<=0x240+num_of_rmdX){
                     int bno = 0;
                     if(id>=0x240) bno = id-0x240;
                     else bno = id-0x140;
-                    _DEV_MC[bno].count++;
-                    if(recv_data2[0] == 0xA1){ 
-                        for(int j=0; j<dlc; j++) _DEV_MC[bno].torque_data[j] = recv_data2[j];
-                        _DEV_MC[bno].UpdateRxData();
-                        _DEV_MC[bno].count_A1++;
+                    _BASE_MC[bno].count++;
+                    // if(recv_data2[0] == 0xA1){ 
+                    //     for(int j=0; j<dlc; j++) _BASE_MC[bno].rx_data_a1[j] = recv_data2[j];
+                    //     _BASE_MC[bno].UpdateRxDataA1();
+                    //     _BASE_MC[bno].count_A1++;
+                    // }
+                    if(recv_data2[0] == 0xA2){
+                        for(int j=0; j<dlc; j++) _BASE_MC[bno].rx_data_a2[j] = recv_data2[j];
+                        _BASE_MC[bno].UpdateRxDataA2();
+                        _BASE_MC[bno].count_A2++;
                     }
-                    else if(recv_data2[0] == 0x92){
-                        for(int j=0; j<dlc; j++) _DEV_MC[bno].enc_data[j] = recv_data2[j];
-                        _DEV_MC[bno].count_A1++;
-                    } 
+                    // else if(recv_data2[0] == 0x92){
+                    //     for(int j=0; j<dlc; j++) _BASE_MC[bno].enc_data_v3[j] = recv_data2[j];
+                    //     _BASE_MC[bno].count_A1++;
+                    // } 
                 }
             }else recv_buf2.remove(0, 1);
         }

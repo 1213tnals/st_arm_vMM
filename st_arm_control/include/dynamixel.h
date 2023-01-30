@@ -8,9 +8,6 @@
 #include "dynamixel_sdk/dynamixel_sdk.h"
 #include <unordered_map>
 
-
-
-
 // #define TORQUE_TO_VALUE   217.39     // XM430-W350
 // #define TORQUE_TO_VALUE_XM430_W210   280.00     // XM430-W210
 #define TORQUE_TO_VALUE_XM540_W270   197.41     // XM540-W270
@@ -131,7 +128,7 @@ class Dynamixel{
   ~Dynamixel();
 
   void SetTorqueRef(VectorXd);
-  VectorXd GetTorqueAct();
+  // VectorXd GetTorqueAct();
   void SetThetaRef(VectorXd);
   VectorXd GetThetaAct();
   VectorXd GetThetaDot();

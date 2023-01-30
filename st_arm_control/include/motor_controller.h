@@ -7,8 +7,8 @@
 
 #define   tic2radL   2607.435432674516
 #define   tic2radX   10430.21970545193
-#define   window_size 20
-#define   num_of_dynamixels 7
+#define   window_size   20
+#define   num_of_rmdX   4
 
 using Eigen::MatrixXd;
 
@@ -30,20 +30,23 @@ public:
   Motor_Controller();
   //~Motor_Controller();
 
-  VectorXd GetThetaX();
-  VectorXd GetThetaL();
-  VectorXd GetTheta();
+  // VectorXd GetThetaX();
+  // VectorXd GetThetaL();
+  // VectorXd GetTheta();
   VectorXd GetJointTheta();
   VectorXd GetThetaDot();
-  VectorXd GetThetaDotEst();
+  // VectorXd GetThetaDotEst();
   VectorXd GetThetaDotSMAF();
   VectorXd GetTorque();
-  void ReadTheta();    
-  void SetTorque(VectorXd tau);  
-  void SetPosition(VectorXd theta);  
+  VectorXd GetWheelSpeed();
+
   void EnableMotor();
+  void SetTorque(VectorXd tau);
+  void SetWheelSpeed(VectorXd ref_wheel_speed);
+  // void SetPosition(VectorXd theta);  
+  void ReadTheta(); 
   void EnableFilter();
-  void ReadCurrentLoopPI();
+  // void ReadCurrentLoopPI();
 };
 
 

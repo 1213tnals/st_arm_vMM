@@ -1,6 +1,5 @@
 #include "dynamixel.h"
 #define PI                3.141592
-#define num_of_dynamixels   7
 
 Dynamixel::Dynamixel(){
   initActuatorValues();

@@ -5,17 +5,17 @@ rmd_motor::rmd_motor()
 
 }
 
-void rmd_motor::UpdateRxData(void) {
-    joint_temperature = (int)(torque_data[1]);
+void rmd_motor::UpdateRxDataA1(void) {
+    joint_temperature = (int)(rx_data_a1[1]);
     
-    int temp_torque = (int)(torque_data[2] | (torque_data[3]<<8));
+    int temp_torque = (int)(rx_data_a1[2] | (rx_data_a1[3]<<8));
     joint_torque = temp_torque / torque_to_data;
     
-    int temp_speed = (int)(torque_data[4] | (torque_data[5]<<8));
+    int temp_speed = (int)(rx_data_a1[4] | (rx_data_a1[5]<<8));
     if(temp_speed > 30000) temp_speed -= 65535;
     joint_velocity = 0.01 * temp_speed * actuator_direction;
 
-    int temp_encoder = (int)(torque_data[6] | (torque_data[7]<<8));
+    int temp_encoder = (int)(rx_data_a1[6] | (rx_data_a1[7]<<8));
     float temp_theta = temp_encoder / data_to_radian;
     float incremental_theta{0};
     if(initialize_position){
@@ -32,6 +32,28 @@ void rmd_motor::UpdateRxData(void) {
     joint_theta += incremental_theta / actuator_gear_ratio * actuator_direction;
 }
 
+void rmd_motor::UpdateRxDataA2(void) 
+{
+    joint_temperature = (int)(rx_data_a2[1]);
+    
+    int temp_torque = (int)(rx_data_a2[2] | (rx_data_a2[3]<<8));
+    joint_torque = temp_torque / torque_to_data;
+    
+    int temp_speed = (int)(rx_data_a2[4] | (rx_data_a2[5]<<8));
+    if(temp_speed > 30000) temp_speed -= 65535;
+    joint_velocity = 0.01 * temp_speed * actuator_direction;
+
+    int temp_encoder = (int)(rx_data_a2[6] | (rx_data_a2[7]<<8));
+    float temp_theta = temp_encoder / deg2rad;
+    if(initialize_position)
+    {
+        joint_initial_position = temp_theta;
+        initialize_position = false;
+    }
+
+    joint_theta = (temp_theta - joint_initial_position) * actuator_direction;
+}
+
 float rmd_motor::GetTheta() 
 {
     return joint_theta;
@@ -40,7 +62,7 @@ float rmd_motor::GetTheta()
 // V3 0x92
 float rmd_motor::GetThetaV3() 
 {
-    int temp_enc = (int)(enc_data[4] | (enc_data[5]<<8) | (enc_data[6]<<16) | (enc_data[7]<<24));
+    int temp_enc = (int)(enc_data_v3[4] | (enc_data_v3[5]<<8) | (enc_data_v3[6]<<16) | (enc_data_v3[7]<<24));
     float temp_theta = temp_enc * 0.0174533 * 0.01 * actuator_direction;
     if(initialize_position)
     {
@@ -63,4 +85,8 @@ float rmd_motor::GetTorque()
     return joint_torque;
 }
 
+float rmd_motor::GetSpeed()
+{
+    return joint_velocity;
+}
 
