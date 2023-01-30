@@ -87,19 +87,19 @@ int main(int argc, char *argv[])
             msg.effort.push_back(jm_dynamics.joint_torque[i]);
         }
 
-        for (uint8_t i = 0; i<3; i ++)
+        for (uint8_t i = 0; i<4; i ++)
         {
-            msg.effort.push_back(_BASE_MC[i].GetTorque());
-            msg.position.push_back(jm_dynamics.ref_th[i]);
+            // msg.effort.push_back(_BASE_MC[i].GetTorque());
+            // msg.position.push_back(jm_dynamics.ref_th[i]);
             // msg.velocity.push_back(jm_dynamics.th_dot[i]);
             // msg.velocity.push_back(jm_dynamics.th_dot_estimated[i]);
         }
         st_arm_joint_states_pub_.publish(msg);
 
-        std_msgs::Float32MultiArray object_weight_msg;
-        object_weight_msg.data.push_back(jm_dynamics.pose_difference(2));
-        object_weight_msg.data.push_back(jm_dynamics.estimated_object_weight);
-        st_arm_object_weight_pub_.publish(object_weight_msg);
+        // std_msgs::Float32MultiArray object_weight_msg;
+        // object_weight_msg.data.push_back(jm_dynamics.pose_difference(2));
+        // object_weight_msg.data.push_back(jm_dynamics.estimated_object_weight);
+        // st_arm_object_weight_pub_.publish(object_weight_msg);
 
         ros::spinOnce();
         loop_rate.sleep();
@@ -124,39 +124,42 @@ void *rt_motion_thread(void *arg){
 
     while(true){
 
-        // if(is_first_loop){
-        //     motor_ctrl.EnableMotor();
-        //     // motor_ctrl.EnableFilter();
-        //     timespec_add_us(&TIME_NEXT, 4 * 1000 * 1000);
-        //     is_first_loop = false;
-        //     loop_count++;
-        // }
-        // else if(loop_count > 1000){
-        //     loop_count++;
+        if(is_first_loop){
+            motor_ctrl.EnableMotor();
+            // motor_ctrl.EnableFilter();
+            timespec_add_us(&TIME_NEXT, 4 * 1000 * 1000);
+            is_first_loop = false;
+            loop_count++;
+            // std::cout << "First Loop" << std::endl;
+        }
+        else if(loop_count > 1000){
+            loop_count++;
             jm_dynamics.Loop();
 
-        //     if(comm_loop_count > 500 && is_print_comm_frequency) {
-        //         comm_loop_count = 1;
-        //         if(comm_loop_count_time_sec < 120)
-        //         {
-        //             comm_loop_count_time_sec++;
-        //             std::cout << "    M1 fbcnt: total: " << _BASE_MC[0].count;  std::cout << "  A1: " << _BASE_MC[0].count_A1;
-        //             std::cout << "    M2 fbcnt: total: " << _BASE_MC[1].count;  std::cout << "  A1: " << _BASE_MC[1].count_A1;
-        //             std::cout << "    M3 fbcnt: total: " << _BASE_MC[2].count;  std::cout << "  A1: " << _BASE_MC[2].count_A1 << std::endl;
-        //             // std::cout << "  92: " << _BASE_MC[2].count_92 << std::endl;
-        //             // std::cout << "    M3 unknown value:  " << _BASE_MC[2].unknown_value << std::endl;
-        //             for(uint8_t i=0;i<3;i++)
-        //             {
-        //                 _BASE_MC[i].count = 0;
-        //                 _BASE_MC[i].count_A1 = 0;
-        //                 _BASE_MC[i].count_92 = 0;
-        //             }
-        //         }
-        //         else is_print_comm_frequency = false;
-        //     }
-        //     if(is_print_comm_frequency) comm_loop_count++;
-        // }
-        // else loop_count++;
+            if(comm_loop_count > 500 && is_print_comm_frequency) {
+                comm_loop_count = 1;
+                if(comm_loop_count_time_sec < 120)
+                {
+                    comm_loop_count_time_sec++;
+                    std::cout << "    M1 fbcnt: total: " << _BASE_MC[0].count;  std::cout << "  A2: " << _BASE_MC[0].count_A2;
+                    std::cout << "    M2 fbcnt: total: " << _BASE_MC[1].count;  std::cout << "  A2: " << _BASE_MC[1].count_A2;
+                    std::cout << "    M3 fbcnt: total: " << _BASE_MC[2].count;  std::cout << "  A2: " << _BASE_MC[2].count_A2;
+                    std::cout << "    M4 fbcnt: total: " << _BASE_MC[3].count;  std::cout << "  A2: " << _BASE_MC[3].count_A2 << std::endl;
+                    // std::cout << "  92: " << _BASE_MC[2].count_92 << std::endl;
+                    // std::cout << "    M3 unknown value:  " << _BASE_MC[2].unknown_value << std::endl;
+                    for(uint8_t i=0;i<4;i++)
+                    {
+                        _BASE_MC[i].count = 0;
+                        // _BASE_MC[i].count_A1 = 0;
+                        _BASE_MC[i].count_A2 = 0;
+                        // _BASE_MC[i].count_92 = 0;
+                    }
+                }
+                else is_print_comm_frequency = false;
+            }
+            if(is_print_comm_frequency) comm_loop_count++;
+        }
+        else loop_count++;
 
         clock_gettime(CLOCK_REALTIME, &TIME_NOW);
         timespec_add_us(&TIME_NEXT, PERIOD_US);

@@ -11,8 +11,8 @@
 extern pRBCORE_SHM sharedData;
 extern rmd_motor _BASE_MC[num_of_rmdX];
 
-// #define SPI_SPEED 4000000
-#define SPI_SPEED 255
+#define SPI_SPEED 4000000
+// #define SPI_SPEED 255
 unsigned char spi_mode = SPI_MODE_0;
 unsigned char spi_bits_per_word = 8;
 unsigned char spi_speed = SPI_SPEED;
@@ -83,6 +83,9 @@ void *spi2can::spi2can_thread(void *arg){
     usleep(500*1000);
 
     clock_gettime(CLOCK_REALTIME, &TIME_NEXT);
+
+    std::cout << "SPI2CAN operating" << std::endl;
+
     while(true){
         // CAN A,B
         // for(int j=0; j<8; j++){

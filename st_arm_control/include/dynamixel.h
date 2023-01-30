@@ -17,7 +17,7 @@
 #define PROTOCOL_VERSION      2.0 
 
 // #define DXL_ID                1
-#define BAUDRATE            1000000
+#define BAUDRATE            4000000
 #define DEVICE_NAME         "/dev/ttyUSB0"
 #define num_of_dynamixels   7
 

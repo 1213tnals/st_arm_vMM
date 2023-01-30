@@ -67,7 +67,7 @@ void Callback::GripperCallback(const std_msgs::Float32ConstPtr &msg)
 
 void Callback::JoystickCallback(const geometry_msgs::Twist::ConstPtr &msg)
 {
-  Vector3d temp_base_vel << msg->linear.x, msg->linear.y, msg->angular.z;
+  temp_base_vel << msg->linear.x, msg->linear.y, msg->angular.z;
 
   base_ctrl.SetBaseVelocity(temp_base_vel);
 }
