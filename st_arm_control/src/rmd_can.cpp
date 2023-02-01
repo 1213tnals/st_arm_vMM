@@ -12,23 +12,23 @@ rmd_can::rmd_can()
 {
     // spi1
     // CAN A
-    reference_msg[0].header = 0x77;     reference_msg[0].id = 0x00;
-    reference_msg[1].header = 0x77;     reference_msg[1].id = 0x00;
-    reference_msg[2].header = 0x77;     reference_msg[2].id = 0x00;
+    reference_msg[0].header = 0x89;     reference_msg[0].id = 0x00;
+    reference_msg[1].header = 0x89;     reference_msg[1].id = 0x00;
+    reference_msg[2].header = 0x89;     reference_msg[2].id = 0x00;
     // CAN B
-    reference_msg[3].header = 0x89;     reference_msg[3].id = 0x00;
-    reference_msg[4].header = 0x89;     reference_msg[4].id = 0x00;
-    reference_msg[5].header = 0x89;     reference_msg[5].id = 0x00;
+    reference_msg[3].header = 0x77;     reference_msg[3].id = 0x00;
+    reference_msg[4].header = 0x77;     reference_msg[4].id = 0x00;
+    reference_msg[5].header = 0x77;     reference_msg[5].id = 0x00;
     
     // spi2
     // CAN C
-    reference_msg[6].header = 0x77;     reference_msg[6].id = 0x140;        // FL motor
-    reference_msg[7].header = 0x77;     reference_msg[7].id = 0x141;        // BL motor
-    reference_msg[8].header = 0x77;     reference_msg[8].id = 0x00;
+    reference_msg[6].header = 0x89;     reference_msg[6].id = 0x140;        // FL motor
+    reference_msg[7].header = 0x89;     reference_msg[7].id = 0x141;        // BL motor
+    reference_msg[8].header = 0x89;     reference_msg[8].id = 0x00;
     // CAN D
-    reference_msg[9].header = 0x89;     reference_msg[9].id = 0x142;        // FR motor
-    reference_msg[10].header = 0x89;    reference_msg[10].id = 0x143;       // BR motor
-    reference_msg[11].header = 0x89;    reference_msg[11].id = 0x00;
+    reference_msg[9].header = 0x77;     reference_msg[9].id = 0x142;        // FR motor
+    reference_msg[10].header = 0x77;    reference_msg[10].id = 0x143;       // BR motor
+    reference_msg[11].header = 0x77;    reference_msg[11].id = 0x00;
 
     for(int i=0; i<12; i++){
         pthread_mutex_init(&mutex_reference[i], NULL);

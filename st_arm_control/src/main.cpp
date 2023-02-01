@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     ros::Subscriber ref_base_vel_sub_;
     ref_base_vel_sub_ = node_handle_.subscribe("unity/ref_base_vel_command", 10, &Callback::JoystickCallback, &callback);
 
-    // spi2can::getInstance();
+    spi2can::getInstance();
 
     sharedData = (pRBCORE_SHM)malloc(sizeof(RBCORE_SHM));
 

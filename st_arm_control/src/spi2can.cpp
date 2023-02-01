@@ -7,6 +7,7 @@
 #include <vector>
 
 #define num_of_rmdX 4
+#define EXTERNAL
 
 extern pRBCORE_SHM sharedData;
 extern rmd_motor _BASE_MC[num_of_rmdX];
