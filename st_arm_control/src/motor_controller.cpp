@@ -1,6 +1,5 @@
 #include "motor_controller.h"
-#define   wheel_diameter    15            //cm
-// #define   rad2deg           57.2957802
+#define   rad2deg           57.2957802
 
 extern pRBCORE_SHM sharedData;
 extern rmd_motor _BASE_MC[num_of_rmdX];
@@ -12,21 +11,21 @@ Motor_Controller::Motor_Controller()
   // _BASE_MC[0].torque_to_data = 140;    _BASE_MC[0].actuator_torque_limit = 4.5*2;      _BASE_MC[0].data_to_radian = tic2radL; // 10430.2197
   // _BASE_MC[0].actuator_direction = -1;    _BASE_MC[0].actuator_gear_ratio = 6;  _BASE_MC[0].joint_initial_position = 0.0;       
   // _BASE_MC[0].torque_to_data = 225;    _BASE_MC[0].actuator_torque_limit = 4.5*2;      _BASE_MC[0].data_to_radian = tic2radL; // 10430.2197
-  _BASE_MC[0].actuator_direction = 1;   _BASE_MC[0].actuator_gear_ratio = 6;  _BASE_MC[0].joint_initial_position = 0.0;
+  _BASE_MC[0].actuator_direction = -1;   _BASE_MC[0].actuator_gear_ratio = 6;  _BASE_MC[0].joint_initial_position = 0.0;
   _BASE_MC[0].torque_to_data = 225;     _BASE_MC[0].actuator_torque_limit = 4.5*2;      _BASE_MC[0].data_to_radian = tic2radX;   //53.42
-  _BASE_MC[0].speed_to_data = rad2deg/wheel_diameter*100;      _BASE_MC[0].actuator_speed_limit = 300;
+  _BASE_MC[0].actuator_speed_limit = 300;
   
-  _BASE_MC[1].actuator_direction = 1;   _BASE_MC[1].actuator_gear_ratio = 6;  _BASE_MC[1].joint_initial_position = 0.0;
+  _BASE_MC[1].actuator_direction = -1;   _BASE_MC[1].actuator_gear_ratio = 6;  _BASE_MC[1].joint_initial_position = 0.0;
   _BASE_MC[1].torque_to_data = 225;    _BASE_MC[1].actuator_torque_limit = 4.5*2;      _BASE_MC[1].data_to_radian = tic2radX;
-  _BASE_MC[1].speed_to_data = rad2deg/wheel_diameter*100;      _BASE_MC[1].actuator_speed_limit = 300;
+  _BASE_MC[1].actuator_speed_limit = 300;
   
-  _BASE_MC[2].actuator_direction = -1;  _BASE_MC[2].actuator_gear_ratio = 6;  _BASE_MC[2].joint_initial_position = 0.0;
+  _BASE_MC[2].actuator_direction = 1;  _BASE_MC[2].actuator_gear_ratio = 6;  _BASE_MC[2].joint_initial_position = 0.0;
   _BASE_MC[2].torque_to_data = 225;    _BASE_MC[2].actuator_torque_limit = 4.5*2;      _BASE_MC[2].data_to_radian = tic2radX;
-  _BASE_MC[2].speed_to_data = rad2deg/wheel_diameter*100;      _BASE_MC[0].actuator_speed_limit = 300;
+  _BASE_MC[2].actuator_speed_limit = 300;
  
-  _BASE_MC[3].actuator_direction = -1;  _BASE_MC[3].actuator_gear_ratio = 6;  _BASE_MC[3].joint_initial_position = 0.0;
+  _BASE_MC[3].actuator_direction = 1;  _BASE_MC[3].actuator_gear_ratio = 6;  _BASE_MC[3].joint_initial_position = 0.0;
   _BASE_MC[3].torque_to_data = 225;    _BASE_MC[3].actuator_torque_limit = 4.5*2;      _BASE_MC[3].data_to_radian = tic2radX;
-  _BASE_MC[3].speed_to_data = rad2deg/wheel_diameter*100;      _BASE_MC[3].actuator_speed_limit = 300;
+  _BASE_MC[3].actuator_speed_limit = 300;
 }
 
 void Motor_Controller::EnableMotor(){
@@ -138,11 +137,11 @@ void Motor_Controller::SetTorque(VectorXd tau){
 
 void Motor_Controller::SetWheelSpeed(VectorXd ref_wheel_speed){
   for(uint8_t i=0; i<num_of_rmdX; i++) {
-    if (true) {
-      if (ref_wheel_speed[i] > _BASE_MC[i].actuator_speed_limit) ref_wheel_speed[i] = _BASE_MC[i].actuator_speed_limit;
-      if (ref_wheel_speed[i] < -1 * _BASE_MC[i].actuator_speed_limit) ref_wheel_speed[i] = -1 * _BASE_MC[i].actuator_speed_limit;
-    }
-    uint32_t param = _BASE_MC[i].actuator_direction * _BASE_MC[i].speed_to_data * ref_wheel_speed[i];
+  //   if (true) {
+  //     if (ref_wheel_speed[i] > _BASE_MC[i].actuator_speed_limit) ref_wheel_speed[i] = _BASE_MC[i].actuator_speed_limit;
+  //     if (ref_wheel_speed[i] < -1 * _BASE_MC[i].actuator_speed_limit) ref_wheel_speed[i] = -1 * _BASE_MC[i].actuator_speed_limit;
+  //   }
+    uint32_t param = _BASE_MC[i].actuator_direction * 100 * rad2deg * ref_wheel_speed[i];
     _BASE_MC[i].ref_data[0] = 0xa2 & 0xFF;
     _BASE_MC[i].ref_data[1] = 0x00 & 0xFF;
     _BASE_MC[i].ref_data[2] = 0x00 & 0xFF;

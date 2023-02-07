@@ -151,10 +151,10 @@ void *rt_motion_thread(void *arg){
                     std::cout << "    M3 speed: " <<  base_ctrl.ref_wheel_speed[2];
                     std::cout << "    M4 speed: " <<  base_ctrl.ref_wheel_speed[3] << std::endl;
 
-                    std::cout << "(0,2):" << base_ctrl.Jacobian_Wheel(0,2); 
-                    std::cout << "(1,2):" << base_ctrl.Jacobian_Wheel(1,2); 
-                    std::cout << "(2,2):" << base_ctrl.Jacobian_Wheel(2,2); 
-                    std::cout << "(3,2):" << base_ctrl.Jacobian_Wheel(3,2) << std::endl;
+                    // std::cout << "(0,2):" << base_ctrl.Jacobian_Wheel(0,2); 
+                    // std::cout << "(1,2):" << base_ctrl.Jacobian_Wheel(1,2); 
+                    // std::cout << "(2,2):" << base_ctrl.Jacobian_Wheel(2,2); 
+                    // std::cout << "(3,2):" << base_ctrl.Jacobian_Wheel(3,2) << std::endl;
 
                     // std::cout << "    X speed: " <<  base_ctrl.ref_base_pos_dot[0];
                     // std::cout << "    Y speed: " <<  base_ctrl.ref_base_pos_dot[1];

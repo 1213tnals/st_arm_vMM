@@ -34,6 +34,6 @@ void Mobile_Base::BaseMovingGeneration()
     // ref_base_pos_dot << joystick_position.y(), -joystick_position.x(), 0;
 
     ref_wheel_speed = Jacobian_Wheel * ref_base_pos_dot;
-    // ref_wheel_speed = 2 / wheel_diameter;
-    // std::cout << ref_wheel_speed[0] << std::endl;
+
+    for(uint8_t i=0; i<4; i++) ref_wheel_speed[i] = ref_wheel_speed[i] * 2 / wheel_diameter ;
 }

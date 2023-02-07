@@ -2,9 +2,9 @@
 #define MOBILE_BASE_H
 
 #include <eigen3/Eigen/Dense>
-#define   dist_A     25
-#define   dist_B     20
-#define   wheel_diameter    15            //cm 
+#define   dist_A     0.25                  //m
+#define   dist_B     0.2                   //m
+#define   wheel_diameter    0.15           //m 
 
 using Eigen::Quaterniond;
 using Eigen::VectorXd;
