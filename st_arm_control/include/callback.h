@@ -16,7 +16,7 @@
 #include "geometry_msgs/PoseStamped.h"
 #include "dynamixel.h"
 
-// using Eigen::Vector3d;
+using Eigen::Vector3d;
 
 class Callback
 {
@@ -35,8 +35,6 @@ public:
   void InitializePose(const std_msgs::BoolConstPtr &msg);
   void GripperCallback(const std_msgs::Float32ConstPtr &msg);
   void JoystickCallback(const geometry_msgs::Twist::ConstPtr &msg);
-
-  Vector3d temp_base_vel;
 
 private:
 

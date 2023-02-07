@@ -145,6 +145,20 @@ void *rt_motion_thread(void *arg){
                     std::cout << "    M2 fbcnt: total: " << _BASE_MC[1].count;  std::cout << "  A2: " << _BASE_MC[1].count_A2;
                     std::cout << "    M3 fbcnt: total: " << _BASE_MC[2].count;  std::cout << "  A2: " << _BASE_MC[2].count_A2;
                     std::cout << "    M4 fbcnt: total: " << _BASE_MC[3].count;  std::cout << "  A2: " << _BASE_MC[3].count_A2 << std::endl;
+                    
+                    std::cout << "    M1 speed: " <<  base_ctrl.ref_wheel_speed[0];
+                    std::cout << "    M2 speed: " <<  base_ctrl.ref_wheel_speed[1];
+                    std::cout << "    M3 speed: " <<  base_ctrl.ref_wheel_speed[2];
+                    std::cout << "    M4 speed: " <<  base_ctrl.ref_wheel_speed[3] << std::endl;
+
+                    std::cout << "(0,2):" << base_ctrl.Jacobian_Wheel(0,2); 
+                    std::cout << "(1,2):" << base_ctrl.Jacobian_Wheel(1,2); 
+                    std::cout << "(2,2):" << base_ctrl.Jacobian_Wheel(2,2); 
+                    std::cout << "(3,2):" << base_ctrl.Jacobian_Wheel(3,2) << std::endl;
+
+                    // std::cout << "    X speed: " <<  base_ctrl.ref_base_pos_dot[0];
+                    // std::cout << "    Y speed: " <<  base_ctrl.ref_base_pos_dot[1];
+                    // std::cout << "    Z speed: " <<  base_ctrl.ref_base_pos_dot[2] << std::endl;
                     // std::cout << "  92: " << _BASE_MC[2].count_92 << std::endl;
                     // std::cout << "    M3 unknown value:  " << _BASE_MC[2].unknown_value << std::endl;
                     for(uint8_t i=0;i<4;i++)

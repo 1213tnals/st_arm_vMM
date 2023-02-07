@@ -1,7 +1,16 @@
 #include "mobile_base.h"
+#include <iostream>
 
 
-Mobile_Base::Mobile_Base() {}
+Mobile_Base::Mobile_Base() {
+
+    Jacobian_Wheel << 1, -1, -(dist_A + dist_B),
+                      1,  1,  (dist_A + dist_B),
+                      1,  1, -(dist_A + dist_B),
+                      1, -1,  (dist_A + dist_B);
+
+}
+
 Mobile_Base::~Mobile_Base() {}
 
 
@@ -24,10 +33,7 @@ void Mobile_Base::BaseMovingGeneration()
 {
     // ref_base_pos_dot << joystick_position.y(), -joystick_position.x(), 0;
 
-    Jacobian_Wheel << 1, -1, -(dist_A + dist_B),
-                      1,  1,  (dist_A + dist_B),
-                      1,  1, -(dist_A + dist_B),
-                      1, -1,  (dist_A + dist_B);
-
-    ref_wheel_speed = 2 / wheel_diameter * Jacobian_Wheel * ref_base_pos_dot;
+    ref_wheel_speed = Jacobian_Wheel * ref_base_pos_dot;
+    // ref_wheel_speed = 2 / wheel_diameter;
+    // std::cout << ref_wheel_speed[0] << std::endl;
 }
