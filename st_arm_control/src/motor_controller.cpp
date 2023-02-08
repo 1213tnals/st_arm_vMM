@@ -1,5 +1,5 @@
 #include "motor_controller.h"
-#define   rad2deg           57.2957802
+// #define   rad2deg           57.2957802
 
 extern pRBCORE_SHM sharedData;
 extern rmd_motor _BASE_MC[num_of_rmdX];
@@ -13,19 +13,19 @@ Motor_Controller::Motor_Controller()
   // _BASE_MC[0].torque_to_data = 225;    _BASE_MC[0].actuator_torque_limit = 4.5*2;      _BASE_MC[0].data_to_radian = tic2radL; // 10430.2197
   _BASE_MC[0].actuator_direction = -1;   _BASE_MC[0].actuator_gear_ratio = 6;  _BASE_MC[0].joint_initial_position = 0.0;
   _BASE_MC[0].torque_to_data = 225;     _BASE_MC[0].actuator_torque_limit = 4.5*2;      _BASE_MC[0].data_to_radian = tic2radX;   //53.42
-  _BASE_MC[0].actuator_speed_limit = 300;
+  _BASE_MC[0].actuator_speed_limit = 1;
   
   _BASE_MC[1].actuator_direction = -1;   _BASE_MC[1].actuator_gear_ratio = 6;  _BASE_MC[1].joint_initial_position = 0.0;
   _BASE_MC[1].torque_to_data = 225;    _BASE_MC[1].actuator_torque_limit = 4.5*2;      _BASE_MC[1].data_to_radian = tic2radX;
-  _BASE_MC[1].actuator_speed_limit = 300;
+  _BASE_MC[1].actuator_speed_limit = 1;
   
   _BASE_MC[2].actuator_direction = 1;  _BASE_MC[2].actuator_gear_ratio = 6;  _BASE_MC[2].joint_initial_position = 0.0;
   _BASE_MC[2].torque_to_data = 225;    _BASE_MC[2].actuator_torque_limit = 4.5*2;      _BASE_MC[2].data_to_radian = tic2radX;
-  _BASE_MC[2].actuator_speed_limit = 300;
+  _BASE_MC[2].actuator_speed_limit = 1;
  
   _BASE_MC[3].actuator_direction = 1;  _BASE_MC[3].actuator_gear_ratio = 6;  _BASE_MC[3].joint_initial_position = 0.0;
   _BASE_MC[3].torque_to_data = 225;    _BASE_MC[3].actuator_torque_limit = 4.5*2;      _BASE_MC[3].data_to_radian = tic2radX;
-  _BASE_MC[3].actuator_speed_limit = 300;
+  _BASE_MC[3].actuator_speed_limit = 1;
 }
 
 void Motor_Controller::EnableMotor(){

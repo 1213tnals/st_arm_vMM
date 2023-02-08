@@ -19,9 +19,9 @@ namespace Dynamics
         PostureGeneration();                       //Making Manupulator tau
         motor_ctrl.SetTorque(GetTorque());
 
-        base_ctrl.SetActualWheelSpeed(motor_ctrl.GetWheelSpeed());
-        base_ctrl.BaseMovingGeneration();          //Making Base speed
-        motor_ctrl.SetWheelSpeed(base_ctrl.GetTargetWheelSpeed());
+        // base_ctrl.SetActualWheelSpeed(motor_ctrl.GetWheelSpeed());
+        // base_ctrl.BaseMovingGeneration();          //Making Base speed
+        // motor_ctrl.SetWheelSpeed(base_ctrl.GetTargetWheelSpeed());
     }
 
 

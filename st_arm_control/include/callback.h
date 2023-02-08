@@ -15,6 +15,7 @@
 #include "geometry_msgs/Twist.h"
 #include "geometry_msgs/PoseStamped.h"
 #include "dynamixel.h"
+#include "sensor_msgs/Joy.h"
 
 using Eigen::Vector3d;
 
@@ -34,7 +35,9 @@ public:
   void SwitchGainR(const std_msgs::Float32MultiArrayConstPtr &msg);
   void InitializePose(const std_msgs::BoolConstPtr &msg);
   void GripperCallback(const std_msgs::Float32ConstPtr &msg);
-  void JoystickCallback(const geometry_msgs::Twist::ConstPtr &msg);
+  void WheelCallback(const geometry_msgs::Twist::ConstPtr &msg);
+  void JoystickCallback(const std_msgs::Float32MultiArrayConstPtr &msg);
+  void JoystickCallbackPS5(const sensor_msgs::JoyConstPtr &msg);
 
 private:
 
