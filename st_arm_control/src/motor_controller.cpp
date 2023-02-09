@@ -85,7 +85,8 @@ VectorXd Motor_Controller::GetThetaDot(){
 VectorXd Motor_Controller::GetThetaDotSMAF(){
   // for(uint8_t i=0; i<3; i++) th_dot[i] = _BASE_MC[i].GetThetaDot();    // Get from shoulder motors RMD-X6
   // VectorXd th_dot_(4); th_dot_ = _WRIST_MC.GetThetaDot(); for(uint8_t i=0; i<4; i++) th_dot[i+3] = th_dot_[i];   // Get from wrist motors: Dynamixel from motor
-  VectorXd a_th_dot(num_of_dynamixels); a_th_dot = _WRIST_MC.GetThetaDotEstimated(); for(uint8_t i=0; i<num_of_dynamixels; i++) th_dot[i] = a_th_dot[i];   // Get from wrist motors: Dynamixel from estimated
+  VectorXd a_th_dot(num_of_dynamixels); a_th_dot = _WRIST_MC.GetThetaDotEstimated();
+  for(uint8_t i=0; i<num_of_dynamixels; i++) th_dot[i] = a_th_dot[i];   // Get from wrist motors: Dynamixel from estimated
   // th_dot[0] = th_dot[0] / 6; // Because V2 motor driver
 
   sma << sma.block<window_size-1, num_of_dynamixels>(1, 0), th_dot[0], th_dot[1], th_dot[2], th_dot[3], th_dot[4], th_dot[5], th_dot[6];
