@@ -88,21 +88,19 @@ void Callback::JoystickCallback(const std_msgs::Float32MultiArrayConstPtr &msg)
 {
   Vector3d joystick_value;
   joystick_value << msg -> data.at(0), msg -> data.at(1), msg -> data.at(2);
-
   base_ctrl.SetJoystickValue(joystick_value);
 
-  std::cout << "SetJoystickValue!!" <<  std::endl;
+  // std::cout << "SetJoystickValue!!" <<  std::endl;
 
-  std::cout << "    x(forward)" <<  base_ctrl.maped_velocity[0];
-  std::cout << "    y(right):"  <<  base_ctrl.maped_velocity[1];
-  std::cout << "    z(yaw):"    <<  base_ctrl.maped_velocity[2] << std::endl;
+  // std::cout << "    x(forward)" <<  base_ctrl.maped_velocity[0];
+  // std::cout << "    y(right):"  <<  base_ctrl.maped_velocity[1];
+  // std::cout << "    z(yaw):"    <<  base_ctrl.maped_velocity[2] << std::endl;
 
-  std::cout << "    FL speed: " <<  base_ctrl.ref_wheel_speed[0];
-  std::cout << "    BL speed: " <<  base_ctrl.ref_wheel_speed[1];
-  std::cout << "    FR speed: " <<  base_ctrl.ref_wheel_speed[2];
-  std::cout << "    BR speed: " <<  base_ctrl.ref_wheel_speed[3] << std::endl;
+  // std::cout << "    FL speed: " <<  base_ctrl.ref_wheel_speed[0];
+  // std::cout << "    BL speed: " <<  base_ctrl.ref_wheel_speed[1];
+  // std::cout << "    FR speed: " <<  base_ctrl.ref_wheel_speed[2];
+  // std::cout << "    BR speed: " <<  base_ctrl.ref_wheel_speed[3] << std::endl;
 }
-
 
 void Callback::JoystickCallbackPS5(const sensor_msgs::JoyConstPtr &msg)
 {

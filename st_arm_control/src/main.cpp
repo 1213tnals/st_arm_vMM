@@ -59,11 +59,11 @@ int main(int argc, char *argv[])
     ros::Subscriber weight_est_start_sub_;
     weight_est_start_sub_ = node_handle_.subscribe("unity/calibrate_obj_weight", 10, &Dynamics::JMDynamics::SwitchOnAddingEstimatedObjWeightToRBDL, &jm_dynamics);
 
-    ros::Subscriber ref_base_vel_sub_old_;
-    ref_base_vel_sub_old_ = node_handle_.subscribe("unity/ref_base_vel_command", 10, &Callback::WheelCallback, &callback);
-
     ros::Subscriber ref_base_vel_sub_;
-    ref_base_vel_sub_ = node_handle_.subscribe("joystick/ref_base_vel_command", 10, &Callback::JoystickCallback, &callback);
+    ref_base_vel_sub_ = node_handle_.subscribe("joystick/ref_base_vel_command", 10, &Callback::WheelCallback, &callback);
+
+    ros::Subscriber joy_unity_sub_;
+    joy_unity_sub_ = node_handle_.subscribe("unity/ref_base_vel_command", 10, &Callback::JoystickCallback, &callback);
     
     ros::Subscriber joy_ps5_sub_;
     joy_ps5_sub_ = node_handle_.subscribe("/joy_orig", 10, &Callback::JoystickCallbackPS5, &callback);
@@ -170,7 +170,7 @@ void *rt_motion_thread(void *arg){
                     // std::cout << "    M3 unknown value:  " << _BASE_MC[2].unknown_value << std::endl;
 
 
-                    std::cout << "    x(forward)" <<  base_ctrl.maped_velocity[0];
+                    std::cout << "    x(forward):" <<  base_ctrl.maped_velocity[0];
                     std::cout << "    y(right):"  <<  base_ctrl.maped_velocity[1];
                     std::cout << "    z(yaw):"    <<  base_ctrl.maped_velocity[2] << std::endl;
                     for(uint8_t i=0;i<4;i++)
