@@ -36,6 +36,9 @@ public:
     Vector3d GetJoystickValue();
     Vector3d MapJoy2Vel(float joy_max, float joy_min, float vel_max, float vel_min, Vector3d a_joystick_value);
     void Loop();
+    
+    void GetBaseState();
+    void SetBaseState();
 
     
 

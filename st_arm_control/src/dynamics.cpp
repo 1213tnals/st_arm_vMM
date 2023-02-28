@@ -698,61 +698,61 @@ namespace Dynamics
         arm_rbdl.rbdl_model = new RBDLModel();
         arm_rbdl.rbdl_model->gravity = RBDL::Math::Vector3d(0.0, 0.0, -9.81);
 
-        arm_rbdl.base_inertia = RBDLMatrix3d(0.030343, 0,        0,
-                                            0,       0.055951,  0,
-                                            0,       0,        0.072831);
+        arm_rbdl.base_inertia = RBDLMatrix3d(0.00007, 0,        0,
+                                            0,       0.00007,  0,
+                                            0,       0,        0.00012);
 
-        arm_rbdl.shoulder_yaw_inertia = RBDLMatrix3d(0.0000462,  0,        0,
-                                                    0,        0.0000392,  0,
-                                                    0,        0,        0.0000363);
+        arm_rbdl.shoulder_yaw_inertia = RBDLMatrix3d(0.000187,  0,        0,
+                                                    0,        0.000137,  0,
+                                                    0,        0,        0.000135);
 
-        arm_rbdl.shoulder_pitch_inertia = RBDLMatrix3d(0.0000498, 0,        0,
-                                                    0,       0.000503,  0,
-                                                    0,       0,        0.000518);
+        arm_rbdl.shoulder_pitch_inertia = RBDLMatrix3d(0.000255, 0,        0,
+                                                    0,       0.000429,  0,
+                                                    0,       0,        0.0004375);
 
-        arm_rbdl.elbow_pitch_inertia = RBDLMatrix3d(0.0000395,  0,        0,
-                                                    0,        0.000450,  0,
-                                                    0,        0,        0.000443);
+        arm_rbdl.elbow_pitch_inertia = RBDLMatrix3d(0.00006166,  0,        0,
+                                                    0,        0.00011225,  0,
+                                                    0,        0,        0.000150);
 
-        arm_rbdl.wrist_pitch_inertia = RBDLMatrix3d(0.0000124,  0,        0,
-                                                    0,        0.0000130,  0,
-                                                    0,        0,        0.000008);
+        arm_rbdl.wrist_pitch_inertia = RBDLMatrix3d(0.0000256,  0,        0,
+                                                    0,        0.0000259,  0,
+                                                    0,        0,        0.0000179);
 
-        arm_rbdl.wrist_roll_inertia = RBDLMatrix3d(0.0000076,  0,        0,
-                                                    0,        0.0000125,  0,
-                                                    0,        0,        0.0000107);
+        arm_rbdl.wrist_roll_inertia = RBDLMatrix3d(0.0000152,  0,        0,
+                                                    0,        0.00002394,  0,
+                                                    0,        0,        0.00002025);
 
-        arm_rbdl.wrist_yaw_inertia = RBDLMatrix3d(0.0001147,  0,        0,
-                                                    0,        0.0000389,  0,
-                                                    0,        0,        0.0000955);
+        arm_rbdl.wrist_yaw_inertia = RBDLMatrix3d(0.0001494,  0,        0,
+                                                    0,        0.0000541,  0,
+                                                    0,        0,        0.0001273);
 
-        // arm_rbdl.base_link = RBDLBody(0.59468, RBDLVector3d(0, 0.00033, 0.03107), arm_rbdl.base_inertia);
+        // arm_rbdl.base_link = RBDLBody(0.15574, RBDLVector3d(0, 0.00033, 0.03107), arm_rbdl.base_inertia);
         // arm_rbdl.base_joint = RBDLJoint(RBDL::JointType::JointTypeFixed, RBDLVector3d(0,0,0));
         // arm_rbdl.base_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(0, RBDL::Math::Xtrans(RBDLVector3d(0,0,0)), arm_rbdl.base_joint, arm_rbdl.base_link);
 
-        arm_rbdl.shoulder_yaw_link = RBDLBody(0.10829, RBDLVector3d(0.000750, 0.00053245, 0.17089), arm_rbdl.shoulder_yaw_inertia);
+        arm_rbdl.shoulder_yaw_link = RBDLBody(0.38116, RBDLVector3d(0, 0, 0.078346), arm_rbdl.shoulder_yaw_inertia);
         arm_rbdl.shoulder_yaw_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,0,1));
         arm_rbdl.shoulder_yaw_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(0, RBDL::Math::Xtrans(RBDLVector3d(0,0,0)), arm_rbdl.shoulder_yaw_joint, arm_rbdl.shoulder_yaw_link);
 
-        arm_rbdl.shoulder_pitch_link = RBDLBody(0.18123, RBDLVector3d(0.17215, -0.00043407, 0), arm_rbdl.shoulder_pitch_inertia);
+        arm_rbdl.shoulder_pitch_link = RBDLBody(0.4681, RBDLVector3d(0.21685, 0, 0.020987), arm_rbdl.shoulder_pitch_inertia);
         arm_rbdl.shoulder_pitch_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,1,0));
-        arm_rbdl.shoulder_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(1, RBDL::Math::Xtrans(RBDLVector3d(0, 0, 0.1928)), arm_rbdl.shoulder_pitch_joint, arm_rbdl.shoulder_pitch_link);
+        arm_rbdl.shoulder_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(1, RBDL::Math::Xtrans(RBDLVector3d(0, 0, 0.9775)), arm_rbdl.shoulder_pitch_joint, arm_rbdl.shoulder_pitch_link);
 
-        arm_rbdl.elbow_pitch_link = RBDLBody(0.11902, RBDLVector3d(0.16004, -0.0010965, 0.01803), arm_rbdl.elbow_pitch_inertia);
+        arm_rbdl.elbow_pitch_link = RBDLBody(0.16299, RBDLVector3d(0.17306, 0.000046, 0), arm_rbdl.elbow_pitch_inertia);
         arm_rbdl.elbow_pitch_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,1,0));
-        arm_rbdl.elbow_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(2, RBDL::Math::Xtrans(RBDLVector3d(0.25,0,0)), arm_rbdl.elbow_pitch_joint, arm_rbdl.elbow_pitch_link);
+        arm_rbdl.elbow_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(2, RBDL::Math::Xtrans(RBDLVector3d(0.251,0,0)), arm_rbdl.elbow_pitch_joint, arm_rbdl.elbow_pitch_link);
 
-        arm_rbdl.wrist_pitch_link = RBDLBody(0.04835, RBDLVector3d(0.043363, -0.001, 0.011409), arm_rbdl.wrist_pitch_inertia);
+        arm_rbdl.wrist_pitch_link = RBDLBody(0.10269, RBDLVector3d(0.044232, -0.0001, -0.010329), arm_rbdl.wrist_pitch_inertia);
         arm_rbdl.wrist_pitch_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,1,0));
-        arm_rbdl.wrist_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(3, RBDL::Math::Xtrans(RBDLVector3d(0.25,0,0)), arm_rbdl.wrist_pitch_joint, arm_rbdl.wrist_pitch_link);
+        arm_rbdl.wrist_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(3, RBDL::Math::Xtrans(RBDLVector3d(0.251,0,0)), arm_rbdl.wrist_pitch_joint, arm_rbdl.wrist_pitch_link);
 
-        arm_rbdl.wrist_roll_link = RBDLBody(0.046957, RBDLVector3d(0.091721, -0.001, 0.00037), arm_rbdl.wrist_roll_inertia);
+        arm_rbdl.wrist_roll_link = RBDLBody(0.087794, RBDLVector3d(0.095115, -0.0001, 0.00008), arm_rbdl.wrist_roll_inertia);
         arm_rbdl.wrist_roll_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(1,0,0));
         arm_rbdl.wrist_roll_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(4, RBDL::Math::Xtrans(RBDLVector3d(0,0,0)), arm_rbdl.wrist_roll_joint, arm_rbdl.wrist_roll_link);
 
-        arm_rbdl.wrist_yaw_link = RBDLBody(0.15177, RBDLVector3d(0.023598, 0.000436, 0.0234), arm_rbdl.wrist_yaw_inertia);
+        arm_rbdl.wrist_yaw_link = RBDLBody(0.23686, RBDLVector3d(0.022156, 0, 0.027894), arm_rbdl.wrist_yaw_inertia);
         arm_rbdl.wrist_yaw_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,0,1));
-        arm_rbdl.wrist_yaw_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(5, RBDL::Math::Xtrans(RBDLVector3d(0.1045,0,0)), arm_rbdl.wrist_yaw_joint, arm_rbdl.wrist_yaw_link);
+        arm_rbdl.wrist_yaw_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(5, RBDL::Math::Xtrans(RBDLVector3d(0.1085,0,0)), arm_rbdl.wrist_yaw_joint, arm_rbdl.wrist_yaw_link);
 
         arm_rbdl.q = RBDLVectorNd::Zero(6);
         arm_rbdl.q_dot = RBDLVectorNd::Zero(6);
@@ -935,33 +935,33 @@ namespace Dynamics
         arm_rbdl.rbdl_model = new RBDLModel();
         arm_rbdl.rbdl_model->gravity = RBDL::Math::Vector3d(0.0, 0.0, -9.81);
 
-        arm_rbdl.base_inertia = RBDLMatrix3d(0.030343, 0,        0,
-                                            0,       0.055951,  0,
-                                            0,       0,        0.072831);
+        arm_rbdl.base_inertia = RBDLMatrix3d(0.00007, 0,        0,
+                                            0,       0.00007,  0,
+                                            0,       0,        0.00012);
 
-        arm_rbdl.shoulder_yaw_inertia = RBDLMatrix3d(0.0000462,  0,        0,
-                                                    0,        0.0000392,  0,
-                                                    0,        0,        0.0000363);
+        arm_rbdl.shoulder_yaw_inertia = RBDLMatrix3d(0.000187,  0,        0,
+                                                    0,        0.000137,  0,
+                                                    0,        0,        0.000135);
 
-        arm_rbdl.shoulder_pitch_inertia = RBDLMatrix3d(0.0000498, 0,        0,
-                                                    0,       0.000503,  0,
-                                                    0,       0,        0.000518);
+        arm_rbdl.shoulder_pitch_inertia = RBDLMatrix3d(0.000255, 0,        0,
+                                                    0,       0.000429,  0,
+                                                    0,       0,        0.0004375);
 
-        arm_rbdl.elbow_pitch_inertia = RBDLMatrix3d(0.0000395,  0,        0,
-                                                    0,        0.000450,  0,
-                                                    0,        0,        0.000443);
+        arm_rbdl.elbow_pitch_inertia = RBDLMatrix3d(0.00006166,  0,        0,
+                                                    0,        0.00011225,  0,
+                                                    0,        0,        0.000150);
 
-        arm_rbdl.wrist_pitch_inertia = RBDLMatrix3d(0.0000124,  0,        0,
-                                                    0,        0.0000130,  0,
-                                                    0,        0,        0.000008);
+        arm_rbdl.wrist_pitch_inertia = RBDLMatrix3d(0.0000256,  0,        0,
+                                                    0,        0.0000259,  0,
+                                                    0,        0,        0.0000179);
 
-        arm_rbdl.wrist_roll_inertia = RBDLMatrix3d(0.0000076,  0,        0,
-                                                    0,        0.0000125,  0,
-                                                    0,        0,        0.0000107);
+        arm_rbdl.wrist_roll_inertia = RBDLMatrix3d(0.0000152,  0,        0,
+                                                    0,        0.00002394,  0,
+                                                    0,        0,        0.00002025);
 
-        arm_rbdl.wrist_yaw_inertia = RBDLMatrix3d(0.0001147,  0,        0,
-                                                    0,        0.0000389,  0,
-                                                    0,        0,        0.0000955);
+        arm_rbdl.wrist_yaw_inertia = RBDLMatrix3d(0.0001494,  0,        0,
+                                                    0,        0.0000541,  0,
+                                                    0,        0,        0.0001273);
 
         arm_rbdl.gripper_inertia = RBDLMatrix3d(0.000005,  0,        0,
                                                     0,        0.000017,  0,
@@ -972,29 +972,29 @@ namespace Dynamics
         // arm_rbdl.base_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(0, RBDL::Math::Xtrans(RBDLVector3d(0,0,0)), arm_rbdl.base_joint, arm_rbdl.base_link);
 
 
-        arm_rbdl.shoulder_yaw_link = RBDLBody(0.10829, RBDLVector3d(0.000750, 0.00053245, 0.17089), arm_rbdl.shoulder_yaw_inertia);
+        arm_rbdl.shoulder_yaw_link = RBDLBody(0.38116, RBDLVector3d(0, 0, 0.078346), arm_rbdl.shoulder_yaw_inertia);
         arm_rbdl.shoulder_yaw_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,0,1));
         arm_rbdl.shoulder_yaw_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(0, RBDL::Math::Xtrans(RBDLVector3d(0,0,0)), arm_rbdl.shoulder_yaw_joint, arm_rbdl.shoulder_yaw_link);
 
-        arm_rbdl.shoulder_pitch_link = RBDLBody(0.18123, RBDLVector3d(0.17215, -0.00043407, 0), arm_rbdl.shoulder_pitch_inertia);
+        arm_rbdl.shoulder_pitch_link = RBDLBody(0.4681, RBDLVector3d(0.21685, 0, 0.020987), arm_rbdl.shoulder_pitch_inertia);
         arm_rbdl.shoulder_pitch_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,1,0));
-        arm_rbdl.shoulder_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(1, RBDL::Math::Xtrans(RBDLVector3d(0, 0, 0.1928)), arm_rbdl.shoulder_pitch_joint, arm_rbdl.shoulder_pitch_link);
+        arm_rbdl.shoulder_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(1, RBDL::Math::Xtrans(RBDLVector3d(0, 0, 0.9775)), arm_rbdl.shoulder_pitch_joint, arm_rbdl.shoulder_pitch_link);
 
-        arm_rbdl.elbow_pitch_link = RBDLBody(0.11902, RBDLVector3d(0.16004, -0.0010965, 0.01803), arm_rbdl.elbow_pitch_inertia);
+        arm_rbdl.elbow_pitch_link = RBDLBody(0.16299, RBDLVector3d(0.17306, 0.000046, 0), arm_rbdl.elbow_pitch_inertia);
         arm_rbdl.elbow_pitch_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,1,0));
-        arm_rbdl.elbow_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(2, RBDL::Math::Xtrans(RBDLVector3d(0.2505,0,0)), arm_rbdl.elbow_pitch_joint, arm_rbdl.elbow_pitch_link);
+        arm_rbdl.elbow_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(2, RBDL::Math::Xtrans(RBDLVector3d(0.251,0,0)), arm_rbdl.elbow_pitch_joint, arm_rbdl.elbow_pitch_link);
 
-        arm_rbdl.wrist_pitch_link = RBDLBody(0.04835, RBDLVector3d(0.043363, -0.001, 0.011409), arm_rbdl.wrist_pitch_inertia);
+        arm_rbdl.wrist_pitch_link = RBDLBody(0.10269, RBDLVector3d(0.044232, -0.0001, -0.010329), arm_rbdl.wrist_pitch_inertia);
         arm_rbdl.wrist_pitch_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,1,0));
-        arm_rbdl.wrist_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(3, RBDL::Math::Xtrans(RBDLVector3d(0.25,0,0)), arm_rbdl.wrist_pitch_joint, arm_rbdl.wrist_pitch_link);
+        arm_rbdl.wrist_pitch_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(3, RBDL::Math::Xtrans(RBDLVector3d(0.251,0,0)), arm_rbdl.wrist_pitch_joint, arm_rbdl.wrist_pitch_link);
 
-        arm_rbdl.wrist_roll_link = RBDLBody(0.046957, RBDLVector3d(0.091721, -0.001, 0.00037), arm_rbdl.wrist_roll_inertia);
+        arm_rbdl.wrist_roll_link = RBDLBody(0.087794, RBDLVector3d(0.095115, -0.0001, 0.00008), arm_rbdl.wrist_roll_inertia);
         arm_rbdl.wrist_roll_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(1,0,0));
         arm_rbdl.wrist_roll_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(4, RBDL::Math::Xtrans(RBDLVector3d(0,0,0)), arm_rbdl.wrist_roll_joint, arm_rbdl.wrist_roll_link);
 
-        arm_rbdl.wrist_yaw_link = RBDLBody(0.15177, RBDLVector3d(0.023598, 0.000436, 0.0234), arm_rbdl.wrist_yaw_inertia);
+        arm_rbdl.wrist_yaw_link = RBDLBody(0.23686, RBDLVector3d(0.022156, 0, 0.027894), arm_rbdl.wrist_yaw_inertia);
         arm_rbdl.wrist_yaw_joint = RBDLJoint(RBDL::JointType::JointTypeRevolute, RBDLVector3d(0,0,1));
-        arm_rbdl.wrist_yaw_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(5, RBDL::Math::Xtrans(RBDLVector3d(0.1045,0,0)), arm_rbdl.wrist_yaw_joint, arm_rbdl.wrist_yaw_link);
+        arm_rbdl.wrist_yaw_id = arm_rbdl.rbdl_model->RBDLModel::AddBody(5, RBDL::Math::Xtrans(RBDLVector3d(0.1085,0,0)), arm_rbdl.wrist_yaw_joint, arm_rbdl.wrist_yaw_link);
 
         arm_rbdl.gripper_link = RBDLBody(a_obj_weight, RBDLVector3d(0.0, 0.0, 0.0), arm_rbdl.gripper_inertia);
         arm_rbdl.gripper_joint = RBDLJoint(RBDL::JointType::JointTypeFixed);

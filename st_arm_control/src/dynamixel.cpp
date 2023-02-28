@@ -113,7 +113,7 @@ void Dynamixel::syncWriteTorque()
 {
   dynamixel::GroupSyncWrite groupSyncWrite(portHandler, packetHandler, kRegStandard_GoalCurrent, 2);
 
-  uint8_t parameter[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
+  uint8_t parameter[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
   for (uint8_t i=0; i < num_of_dynamixels; i++)
   {
     // ref_torque_value_[i] = ref_torque_[i] * TORQUE_TO_VALUE;
@@ -156,7 +156,7 @@ void Dynamixel::syncWriteTheta()
 {
   dynamixel::GroupSyncWrite gSyncWriteTh(portHandler, packetHandler, kRegStandard_GoalPosition, 4);
 
-  uint8_t parameter[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
+  uint8_t parameter[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
   for (uint8_t i=0; i < num_of_dynamixels; i++){
     ref_th_value_ = ref_th_ * RAD_TO_VALUE;
@@ -205,12 +205,16 @@ void Dynamixel::initActuatorValues()
   torque2value[4] = TORQUE_TO_VALUE_XM430_W350;
   torque2value[5] = TORQUE_TO_VALUE_XM430_W350;
   torque2value[6] = TORQUE_TO_VALUE_XM430_W350;
+  torque2value[7] = TORQUE_TO_VALUE_XM540_W270;
+  torque2value[8] = TORQUE_TO_VALUE_XM540_W270;
 
   zero_manual_offset_[0] = 0;
-  zero_manual_offset_[1] = PI/2;
-  zero_manual_offset_[2] = -0.9379;
-  zero_manual_offset_[3] = -0.2838;
+  zero_manual_offset_[1] = 1.3076;
+  zero_manual_offset_[2] = -1.3076;
+  zero_manual_offset_[3] = 0;
   zero_manual_offset_[4] = 0;
   zero_manual_offset_[5] = 0;
   zero_manual_offset_[6] = 0;
+  zero_manual_offset_[7] = -zero_manual_offset_[1];
+  zero_manual_offset_[8] = -zero_manual_offset_[2];
 }

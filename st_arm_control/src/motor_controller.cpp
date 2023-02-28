@@ -89,7 +89,7 @@ VectorXd Motor_Controller::GetThetaDotSMAF(){
   for(uint8_t i=0; i<num_of_dynamixels; i++) th_dot[i] = a_th_dot[i];   // Get from wrist motors: Dynamixel from estimated
   // th_dot[0] = th_dot[0] / 6; // Because V2 motor driver
 
-  sma << sma.block<window_size-1, num_of_dynamixels>(1, 0), th_dot[0], th_dot[1], th_dot[2], th_dot[3], th_dot[4], th_dot[5], th_dot[6];
+  sma << sma.block<window_size-1, num_of_dynamixels>(1, 0), th_dot[0], th_dot[1], th_dot[2], th_dot[3], th_dot[4], th_dot[5], th_dot[6], -th_dot[1], -th_dot[2];
   th_dot_sma_filtered = sma.colwise().mean();
 
   return th_dot_sma_filtered;
@@ -132,7 +132,11 @@ void Motor_Controller::SetTorque(VectorXd tau){
   //   _BASE_MC[i].ref_data[7] = 0x00 & 0xFF;
   // }
 
-  for(uint8_t i=0; i<num_of_dynamixels; i++) torque_wrist[i] = tau[i];
+  for(uint8_t i=0; i<num_of_dynamixels-2; i++) torque_wrist[i] = tau[i];
+  torque_wrist[1] = torque_wrist[1] / 2;
+  torque_wrist[2] = torque_wrist[2] / 2;
+  torque_wrist[7] = -torque_wrist[1];
+  torque_wrist[8] = -torque_wrist[2];
   _WRIST_MC.SetTorqueRef(torque_wrist);
 }
 

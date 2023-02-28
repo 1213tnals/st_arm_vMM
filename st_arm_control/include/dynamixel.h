@@ -19,7 +19,7 @@
 // #define DXL_ID                1
 #define BAUDRATE            4000000
 #define DEVICE_NAME         "/dev/ttyUSB0"
-#define num_of_dynamixels   7
+#define num_of_dynamixels   9
 
 using Eigen::VectorXd;
 
@@ -140,13 +140,13 @@ class Dynamixel{
   dynamixel::PortHandler * portHandler;
   dynamixel::PacketHandler * packetHandler;
 
-  const int dx_id[num_of_dynamixels] = {0, 1, 2, 3, 4, 5, 6};
+  const int dx_id[num_of_dynamixels] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
   // float zero_manual_offset_[4] = {0.2424, 0, 0, 0};
-  float zero_manual_offset_[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
-  uint32_t position[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
-  uint32_t velocity[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
-  int32_t ref_torque_value_[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
-  int32_t torque2value[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0};
+  float zero_manual_offset_[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+  uint32_t position[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+  uint32_t velocity[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int32_t ref_torque_value_[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int32_t torque2value[num_of_dynamixels] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
   VectorXd ref_th_value_ = VectorXd::Zero(num_of_dynamixels);
   VectorXd ref_th_ = VectorXd::Zero(num_of_dynamixels);

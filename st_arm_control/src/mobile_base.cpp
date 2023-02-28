@@ -55,6 +55,18 @@ Vector3d Mobile_Base::MapJoy2Vel(float joy_max, float joy_min, float vel_max, fl
     return maped_velocity;
 }
 
+void Mobile_Base::GetBaseState()
+{
+
+}
+
+void Mobile_Base::SetBaseState()
+{
+    
+}
+
+
+
 void Mobile_Base::Loop()
     {
         SetActualWheelSpeed(motor_ctrl.GetWheelSpeed());
