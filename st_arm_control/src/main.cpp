@@ -153,6 +153,15 @@ void *rt_motion_thread(void *arg){
                     std::cout << "    M3 fbcnt: total: " << _BASE_MC[2].count;  std::cout << "  A2: " << _BASE_MC[2].count_A2;
                     std::cout << "    M4 fbcnt: total: " << _BASE_MC[3].count;  std::cout << "  A2: " << _BASE_MC[3].count_A2 << std::endl;
                     
+                    std::cout << "  dynamixel data: " << motor_ctrl.torque_wrist[0];
+                    std::cout << "  / " << motor_ctrl.torque_wrist[1];
+                    std::cout << "  / " << motor_ctrl.torque_wrist[2];
+                    std::cout << "  / " << motor_ctrl.torque_wrist[3];
+                    std::cout << "  / " << motor_ctrl.torque_wrist[4];
+                    std::cout << "  / " << motor_ctrl.torque_wrist[5];
+                    std::cout << "  / " << motor_ctrl.torque_wrist[6];
+                    std::cout << "  / " << motor_ctrl.torque_wrist[7];
+                    std::cout << "  / " << motor_ctrl.torque_wrist[8] << std::endl;
                     // std::cout << "    M1 speed: " <<  base_ctrl.ref_wheel_speed[0];
                     // std::cout << "    M2 speed: " <<  base_ctrl.ref_wheel_speed[1];
                     // std::cout << "    M3 speed: " <<  base_ctrl.ref_wheel_speed[2];
@@ -199,7 +208,7 @@ void *rt_motion_thread(void *arg){
 
 
 void *rt_dynamixel_thread(void *arg){
-    const long PERIOD_US = 2.5 * 1000;
+    const long PERIOD_US = 2.4 * 1000;
     struct timespec TIME_NEXT;
     struct timespec TIME_NOW;
     struct timespec TIME_TIC;
